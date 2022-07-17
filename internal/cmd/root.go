@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/samuelmachado/cli-poc-dock/internal/cmd/sources"
 	v "github.com/samuelmachado/cli-poc-dock/internal/cmd/version"
 	"github.com/samuelmachado/cli-poc-dock/pkg/structs/cmd"
 
@@ -33,7 +34,12 @@ func Root(vf v.FullVersion) {
 	)
 
 	rootCmd.AddCommand(version(vf))
+	addSources(rootCmd, &flags)
 
 	rootCmd.Execute()
 
+}
+
+func addSources(rootCmd *cobra.Command, flags *cmd.Flags) {
+	rootCmd.AddCommand(sources.Caradhras(flags))
 }
