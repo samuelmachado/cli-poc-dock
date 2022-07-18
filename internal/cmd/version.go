@@ -14,7 +14,7 @@ func version(vf v.FullVersion) (versionCmd *cobra.Command) {
 		Use:   "version",
 		Short: "Print the version of CLI DOCK",
 		Long:  `Print the semantical version of CLI DOCK built`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Run: func(_ *cobra.Command, _ []string) {
 			fmt.Printf("version: %s\nbuilded at: %s\ncommit hash: %s\n", vf.Version, vf.Date, vf.Commit)
 		},
 	}

@@ -18,28 +18,31 @@ func Root(vf v.FullVersion) {
 	rootCmd = &cobra.Command{
 		Use:   "dock",
 		Short: "dock",
-		Run: func(cmd *cobra.Command, args []string) {
+		Run: func(cmd *cobra.Command, _ []string) {
 			cmd.Help()
 		},
 	}
 
+	// Global flags
+	// global flags should work for all commands
 	rootCmd.PersistentFlags().StringVarP(
-		&flags.Dir, "dir", "d", "./",
-		"The output dir: -d ~/Docs",
+		&flags.FormatType, "output type", "o", "json",
+		"The output format: -o json",
 	)
+	//
 
-	rootCmd.PersistentFlags().StringVarP(
-		&flags.FormatType, "format-type", "t", "test",
-		"The output format: -t test",
-	)
-
+	// Global commands
+	// These are generic commands available in the CLI
 	rootCmd.AddCommand(version(vf))
-	addSources(rootCmd, &flags)
+
+	// Custom commands
+	// any command intended to perform an action in DOCK applications
+	addCustomCommands(rootCmd, &flags)
 
 	rootCmd.Execute()
 
 }
 
-func addSources(rootCmd *cobra.Command, flags *cmd.Flags) {
+func addCustomCommands(rootCmd *cobra.Command, flags *cmd.Flags) {
 	rootCmd.AddCommand(sources.Caradhras(flags))
 }
