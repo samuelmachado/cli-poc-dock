@@ -45,4 +45,8 @@ func Root(vf v.FullVersion) {
 
 func addCustomCommands(rootCmd *cobra.Command, flags *cmd.Flags) {
 	rootCmd.AddCommand(sources.Caradhras(flags))
+	//
+	//
+	//
+	//
 }

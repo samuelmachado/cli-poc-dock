@@ -7,8 +7,6 @@ import (
 	"github.com/samuelmachado/cli-poc-dock/pkg/structs/cmd"
 )
 
-const MIN_TOKEN_LENGTH = 5
-
 //NormalizeFlags normalize flags given
 func NormalizeGlobalFlags(flags *cmd.Flags) {
 	flags.FormatType = normalizeFormatType(flags.FormatType)
