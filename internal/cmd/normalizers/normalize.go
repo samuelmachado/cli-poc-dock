@@ -9,11 +9,11 @@ import (
 
 //NormalizeFlags normalize flags given
 func NormalizeGlobalFlags(flags *cmd.Flags) {
-	flags.FormatType = normalizeFormatType(flags.FormatType)
+	flags.FormatType, _ = normalizeFormatType(flags.FormatType)
 }
 
 //normalizeFormatType
-func normalizeFormatType(format string) string {
+func normalizeFormatType(format string) (string, error) {
 	ok := false
 	allowed := []string{"json", "xml"}
 
@@ -27,14 +27,9 @@ func normalizeFormatType(format string) string {
 	}
 
 	if ok != true {
-		panic(
-			fmt.Errorf(
-				"Error format type not suported: %v, suported list: %v",
-				format, allowed,
-			),
-		)
+		return "", fmt.Errorf("Error format type not suported: %v, suported list: %v", format, allowed)
 	}
 
-	return format
+	return format, nil
 
 }

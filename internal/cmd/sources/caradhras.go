@@ -21,9 +21,9 @@ func Caradhras(flags *cmd.Flags) (caradhrasCmd *cobra.Command) {
 	manager := caradhras.NewCaradhasManager()
 
 	caradhrasCmd = &cobra.Command{
-		Use:   "caradhras",
-		Short: "use to access the Caradhras SDK",
-		Long:  `command used to access Caradhras SDK methods. You can also check the official documentation by going to https://lighthouse.dock.tech/`,
+		Use:   "sdk",
+		Short: "use to access the dock SDK",
+		Long:  `command used to access SDK methods. You can also check the official documentation by going to https://lighthouse.dockm.tech/`,
 		Run: func(cmd *cobra.Command, _ []string) {
 			cmd.Help()
 		},
@@ -31,8 +31,8 @@ func Caradhras(flags *cmd.Flags) (caradhrasCmd *cobra.Command) {
 
 	caradhrasCmd.AddCommand(&cobra.Command{
 		Use:   "init",
-		Short: "init the Caradhras SDK",
-		Long:  `Initializes the Caradhras SDK. The arg 0 is used for the token. e.g.: Caradhras init eyJra...bEw`,
+		Short: "init the SDK",
+		Long:  `Initializes the SDK. The arg 0 is used for the token. e.g.: dock sdk init eyJra...bEw`,
 		Args: func(_ *cobra.Command, args []string) error {
 			if len(args) <= 0 {
 				return caradhras.ErrTokenInvalid
