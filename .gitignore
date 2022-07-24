@@ -1,3 +1,5 @@
 logs
 .*.md
 bin
+*.out
+*.diff

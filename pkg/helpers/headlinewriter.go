@@ -4,10 +4,6 @@ import "fmt"
 
 const DEFAULT_MARGIN = 2
 
-func PrintHeadline(text string) {
-	fmt.Println(CreateHeadline(text))
-}
-
 func CreateHeadline(text string) string {
 	text = fmt.Sprintf("| %s |", text)
 	line := "+"

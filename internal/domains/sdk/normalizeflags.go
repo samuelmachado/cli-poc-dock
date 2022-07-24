@@ -1,4 +1,4 @@
-package caradhras
+package sdk
 
 import (
 	"fmt"
@@ -11,9 +11,10 @@ const PORT_MIN = 1
 const PORT_MAX = 65535
 
 //NormalizeFlags normalize flags given
-func NormalizeFlags(flags *cmd.Flags) {
-	normalizers.NormalizeGlobalFlags(flags)
+func NormalizeFlags(flags *cmd.Flags) error {
+	err := normalizers.NormalizeGlobalFlags(flags)
 	flags.Port = normalizePortFlag(flags.Port)
+	return err
 }
 
 func normalizePortFlag(format int) int {

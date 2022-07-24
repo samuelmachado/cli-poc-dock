@@ -1,6 +1,6 @@
-FROM golang:1.17-alpine AS builder
+FROM golang:1.18-alpine AS builder
 
-WORKDIR /api
+WORKDIR /cli
 RUN apk add --no-cache git make
 
 COPY go.mod go.sum /
@@ -14,9 +14,9 @@ RUN make build
 FROM alpine as runner
 WORKDIR /go/bin
 
-RUN apk update && apk add bash && apk --no-cache add tzdata
+RUN apk update && apk add bash
 
-COPY --from=builder /api/bin/api .
+COPY --from=builder /cli/bin/dock .
 
 ENTRYPOINT ["go"]
 CMD "--help"

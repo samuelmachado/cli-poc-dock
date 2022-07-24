@@ -2,7 +2,8 @@ package cmd
 
 import (
 	"github.com/samuelmachado/cli-poc-dock/internal/cmd/sources"
-	v "github.com/samuelmachado/cli-poc-dock/internal/cmd/version"
+	v "github.com/samuelmachado/cli-poc-dock/pkg/structs/version"
+
 	"github.com/samuelmachado/cli-poc-dock/pkg/structs/cmd"
 
 	"github.com/spf13/cobra"
@@ -10,9 +11,7 @@ import (
 
 var rootCmd *cobra.Command
 
-//Root Command
-func Root(vf v.FullVersion) {
-
+func NewRootCmd(vf v.FullVersion) *cobra.Command {
 	var flags cmd.Flags
 
 	rootCmd = &cobra.Command{
@@ -26,7 +25,7 @@ func Root(vf v.FullVersion) {
 	// Global flags
 	// global flags should work for all commands
 	rootCmd.PersistentFlags().StringVarP(
-		&flags.FormatType, "output type", "o", "json",
+		&flags.FormatType, "output", "o", "json",
 		"The output format: -o json",
 	)
 	//
@@ -39,12 +38,12 @@ func Root(vf v.FullVersion) {
 	// any command intended to perform an action in DOCK applications
 	addCustomCommands(rootCmd, &flags)
 
-	rootCmd.Execute()
-
+	//rootCmd.Execute()
+	return rootCmd
 }
 
 func addCustomCommands(rootCmd *cobra.Command, flags *cmd.Flags) {
-	rootCmd.AddCommand(sources.Caradhras(flags))
+	rootCmd.AddCommand(sources.Sdk(flags))
 	rootCmd.AddCommand(sources.Profile(flags))
 	//
 	//

@@ -1,25 +1,27 @@
 package normalizers
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/samuelmachado/cli-poc-dock/pkg/structs/cmd"
 )
 
+var SUPPORTED_FORMATS = []string{"json", "text"}
+
 //NormalizeFlags normalize flags given
-func NormalizeGlobalFlags(flags *cmd.Flags) {
-	flags.FormatType, _ = normalizeFormatType(flags.FormatType)
+func NormalizeGlobalFlags(flags *cmd.Flags) error {
+	var err error
+	flags.FormatType, err = normalizeFormatType(flags.FormatType)
+	return err
 }
 
 //normalizeFormatType
 func normalizeFormatType(format string) (string, error) {
 	ok := false
-	allowed := []string{"json", "xml"}
 
 	format = strings.ToLower(format)
 
-	for _, f := range allowed {
+	for _, f := range SUPPORTED_FORMATS {
 		if format == f {
 			ok = true
 			break
@@ -27,7 +29,7 @@ func normalizeFormatType(format string) (string, error) {
 	}
 
 	if ok != true {
-		return "", fmt.Errorf("Error format type not suported: %v, suported list: %v", format, allowed)
+		return "", ErrInvalidOutputFormat
 	}
 
 	return format, nil

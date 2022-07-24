@@ -2,6 +2,7 @@ package profile
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/samuelmachado/cli-poc-dock/pkg/helpers"
 )
@@ -15,49 +16,38 @@ func NewProfileManager() *ProfileManager {
 }
 
 func (m *ProfileManager) Create() error {
-	helpers.PrintHeadline("Let's set up your new profile")
+	stdin := os.Stdin
+	headline := helpers.CreateHeadline("Let's set up your new profile")
+	fmt.Println(headline)
 
-	profile, err := helpers.ReadText("type a name for it: ")
+	profile, err := helpers.ReadText("type a name for it: ", stdin)
 	if err != nil {
 		return err
 	}
 
-	helpers.PrintHeadline("Let's configure your credentials for the SANDBOX environment")
-	clientId, err := helpers.ReadText("client_id: ")
+	headline = helpers.CreateHeadline("Let's configure your credentials for the SANDBOX environment")
+	fmt.Println(headline)
+	clientId, err := helpers.ReadText("client_id: ", stdin)
 	if err != nil {
 		return err
 	}
 
-	clientSecret, err := helpers.ReadPassword("client_secret: ")
+	clientSecret, err := helpers.ReadPassword("client_secret: ", os.Stdin)
 	if err != nil {
 		return err
 	}
 
 	successHeadline := fmt.Sprintf("you can select the profile by running: dock profile select %s sandbox", profile)
-	helpers.PrintHeadline(successHeadline)
+	headline = helpers.CreateHeadline(successHeadline)
+	fmt.Println(headline)
 
 	fmt.Println(clientId, clientSecret)
-	m.saveEnvironment()
 	return nil
 }
+func (m *ProfileManager) Select(name string) {
 
-type Credential struct {
-	ClientId string `json:"client_id"`
-	SecretId string `json:"secret_id"`
-}
-type Env struct {
-	Sandbox    Credential
-	Production Credential
 }
 
-func (m *ProfileManager) saveEnvironment() {
+func (m *ProfileManager) Delete(name string) {
 
-	//users := map[string]Env{"profile": Env{Sandbox: Credential{ClientId: "x1", SecretId: "x2"}, Production: Credential{ClientId: "x3", SecretId: "x4"}}}
-
-	users := map[string]Env{"profile": {
-		Sandbox:    Credential{ClientId: "a", SecretId: "b"},
-		Production: Credential{ClientId: "a", SecretId: "b"},
-	}}
-
-	helpers.WriteFile(users)
 }

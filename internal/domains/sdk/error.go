@@ -1,4 +1,4 @@
-package caradhras
+package sdk
 
 import "errors"
 

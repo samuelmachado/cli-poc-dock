@@ -7,6 +7,7 @@ require (
 	github.com/merci-app/dock-sdk-backend v0.0.0-20220713020120-be908dd3d0a2
 	github.com/rs/zerolog v1.27.0 // indirect
 	github.com/spf13/cobra v1.5.0
+	github.com/stretchr/testify v1.7.1
 	golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8 // indirect
 	golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1
 	gopkg.in/yaml.v3 v3.0.1 // indirect

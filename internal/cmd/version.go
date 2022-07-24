@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	v "github.com/samuelmachado/cli-poc-dock/internal/cmd/version"
+	v "github.com/samuelmachado/cli-poc-dock/pkg/structs/version"
 	"github.com/spf13/cobra"
 )
 
@@ -15,7 +15,7 @@ func version(vf v.FullVersion) (versionCmd *cobra.Command) {
 		Short: "Print the version of CLI DOCK",
 		Long:  `Print the semantical version of CLI DOCK built`,
 		Run: func(_ *cobra.Command, _ []string) {
-			fmt.Printf("version: %s\nbuilded at: %s\ncommit hash: %s\n", vf.Version, vf.Date, vf.Commit)
+			fmt.Fprintf(versionCmd.OutOrStdout(), "version: %s\nbuilded at: %s\ncommit hash: %s\n", vf.Version, vf.Date, vf.Commit)
 		},
 	}
 
