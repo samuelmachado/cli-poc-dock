@@ -16,3 +16,7 @@ build:
 test:
 	@go test -race ./... -coverprofile=coverage.out
 	@go tool cover -html=coverage.out
+
+.PHONY: lint
+lint:
+	@golangci-lint run
