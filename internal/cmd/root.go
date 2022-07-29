@@ -2,7 +2,8 @@ package cmd
 
 import (
 	"github.com/samuelmachado/cli-poc-dock/internal/cmd/sources"
-	v "github.com/samuelmachado/cli-poc-dock/internal/cmd/version"
+	v "github.com/samuelmachado/cli-poc-dock/pkg/structs/version"
+
 	"github.com/samuelmachado/cli-poc-dock/pkg/structs/cmd"
 
 	"github.com/spf13/cobra"
@@ -10,36 +11,41 @@ import (
 
 var rootCmd *cobra.Command
 
-//Root Command
-func Root(vf v.FullVersion) {
-
+func NewRootCmd(vf v.FullVersion) *cobra.Command {
 	var flags cmd.Flags
 
 	rootCmd = &cobra.Command{
 		Use:   "dock",
 		Short: "dock",
-		Run: func(cmd *cobra.Command, args []string) {
+		Run: func(cmd *cobra.Command, _ []string) {
 			cmd.Help()
 		},
 	}
 
+	// Global flags
+	// global flags should work for all commands
 	rootCmd.PersistentFlags().StringVarP(
-		&flags.Dir, "dir", "d", "./",
-		"The output dir: -d ~/Docs",
+		&flags.FormatType, "output", "o", "json",
+		"The output format: -o json",
 	)
+	//
 
-	rootCmd.PersistentFlags().StringVarP(
-		&flags.FormatType, "format-type", "t", "test",
-		"The output format: -t test",
-	)
-
+	// Global commands
+	// These are generic commands available in the CLI
 	rootCmd.AddCommand(version(vf))
-	addSources(rootCmd, &flags)
 
-	rootCmd.Execute()
+	// Custom commands
+	// any command intended to perform an action in DOCK applications
+	addCustomCommands(rootCmd, &flags)
 
+	//rootCmd.Execute()
+	return rootCmd
 }
 
-func addSources(rootCmd *cobra.Command, flags *cmd.Flags) {
-	rootCmd.AddCommand(sources.Caradhras(flags))
+func addCustomCommands(rootCmd *cobra.Command, flags *cmd.Flags) {
+	rootCmd.AddCommand(sources.Sdk(flags))
+	rootCmd.AddCommand(sources.Profile(flags))
+	//
+	//
+	//
 }
